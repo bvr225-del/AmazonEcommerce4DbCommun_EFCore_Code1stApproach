@@ -26,6 +26,10 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 //===========================================================================
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+//===========================================================================
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
 
 
 
