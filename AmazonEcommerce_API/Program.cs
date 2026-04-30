@@ -19,10 +19,15 @@ builder.Services.AddDbContext<EmployeeContext>(options => options.UseSqlServer(b
 builder.Services.AddDbContext<OrderContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OrderCodeFirstApproachDatabase")));
 builder.Services.AddDbContext<DepartmentContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DepartmentCodeFirstApproachDatabase")));
 builder.Services.AddDbContext<RestaurantContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantCodeFirstApproachDatabase")));
-
-
+//===========================================================================
+//Here we are registering the service and repository classes in the dependency injection container.
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+//===========================================================================
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
+
 
 
 var app = builder.Build();
