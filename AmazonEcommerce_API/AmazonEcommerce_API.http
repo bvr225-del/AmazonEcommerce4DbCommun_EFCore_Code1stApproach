@@ -1,0 +1,6 @@
+@AmazonEcommerce_API_HostAddress = http://localhost:5103
+
+GET {{AmazonEcommerce_API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
