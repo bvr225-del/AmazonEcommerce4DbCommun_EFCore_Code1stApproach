@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AmazonEcommerce_BusinessEntities\AmazonEcommerce_BusinessEntities.csproj" />
+    <ProjectReference Include="..\AmazonEcommerce_RepositoryLayer\AmazonEcommerce_RepositoryLayer.csproj" />
+  </ItemGroup>
+
 </Project>
