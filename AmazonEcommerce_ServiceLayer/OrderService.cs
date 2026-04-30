@@ -1,6 +1,8 @@
 ﻿using AmazonEcommerce_BusinessEntities.Dtos;
 using AmazonEcommerce_BusinessEntities.Entities;
 using AmazonEcommerce_BusinessEntities.Interfaces;
+using AmazonEcommerce_DbConnectivity.Migrations.Order;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +14,17 @@ namespace AmazonEcommerce_ServiceLayer
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        public OrderService(IOrderRepository orderRepository)
+        private readonly IMapper _mapper;
+
+        public OrderService(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
+            this._mapper = mapper;
         }
         public async Task<int> AddOrder(OrderDto orderdetail)
         {
             Order order = new Order();
-            order.orderid = orderdetail.orderid;
-            order.ordername = orderdetail.ordername;
-            order.orderlocation = orderdetail.orderlocation;
+            _mapper.Map(orderdetail, order);
             var res = await _orderRepository.AddOrder(order);
             return res;
 
@@ -37,37 +40,21 @@ namespace AmazonEcommerce_ServiceLayer
         public async Task<OrderDto> GetOrderById(int orderid)
         {
             var res = await _orderRepository.GetOrderById(orderid);
-            OrderDto orderdto = new OrderDto();
-            orderdto.orderid = res.orderid;
-            orderdto.ordername = res.ordername;
-            orderdto.orderlocation = res.orderlocation;
-            return orderdto;
+            return _mapper.Map<OrderDto>(res);
 
         }
 
         public async Task<List<OrderDto>> GetOrders()
         {
-            List<OrderDto> lstorderdto = new List<OrderDto>();
             var res = await _orderRepository.GetOrders();
-            foreach (Order order in res)
-            {
-                OrderDto OrderDto = new OrderDto();
-                OrderDto.orderid = order.orderid;
-                OrderDto.ordername = order.ordername;
-                OrderDto.orderlocation = order.orderlocation;
-                lstorderdto.Add(OrderDto);//Add the orders to list here
-
-            }
-            return lstorderdto;
+            return _mapper.Map<List<OrderDto>>(res);
 
         }
 
         public async Task<bool> UpdateOrder(OrderDto orderdetail)
         {
             Order obj = new Order();
-            obj.orderid = orderdetail.orderid;
-            obj.ordername = orderdetail.ordername;
-            obj.orderlocation = orderdetail.orderlocation;
+            _mapper.Map(orderdetail, obj);
             await _orderRepository.UpdateOrder(obj);
             return true;
 

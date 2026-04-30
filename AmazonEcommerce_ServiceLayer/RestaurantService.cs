@@ -1,6 +1,7 @@
 ﻿using AmazonEcommerce_BusinessEntities.Dtos;
 using AmazonEcommerce_BusinessEntities.Entities;
 using AmazonEcommerce_BusinessEntities.Interfaces;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,17 @@ namespace AmazonEcommerce_ServiceLayer
     public class RestaurantService : IRestaurantService
     {
         private readonly IRestaurantRepository _restaurantRepository;
-        public RestaurantService(IRestaurantRepository restaurantRepository)
+        private readonly IMapper _mapper;
+        public RestaurantService(IRestaurantRepository restaurantRepository, IMapper mapper)
         {
             _restaurantRepository = restaurantRepository;
+            this._mapper = mapper;
         }
 
         public async Task<bool> AddRestaurant(RestaurantDto Objres)
         {
             Restaurant objres = new Restaurant();
-            objres.RestaurantName = Objres.RestaurantName;
-            objres.RestaurantLocation = Objres.RestaurantLocation;
-            objres.CreationDate = Objres.CreationDate;
+            _mapper.Map(Objres, objres);
             var res = await _restaurantRepository.AddRestaurant(objres);
             return res;
 
@@ -37,41 +38,21 @@ namespace AmazonEcommerce_ServiceLayer
 
         public async Task<List<RestaurantDto>> GetallRestaurants()
         {
-            List<RestaurantDto> reslist = new List<RestaurantDto>();
             var getrestaurants = await _restaurantRepository.GetallRestaurants();
-            foreach (var restaurant in getrestaurants)
-            {
-                RestaurantDto resobj = new RestaurantDto();
-                resobj.Id = restaurant.Id;
-                resobj.RestaurantName = restaurant.RestaurantName;
-                resobj.RestaurantLocation = restaurant.RestaurantLocation;
-                resobj.CreationDate = restaurant.CreationDate;
-                reslist.Add(resobj);
-
-
-            }
-            return reslist;
+            return _mapper.Map<List<RestaurantDto>>(getrestaurants);
         }
 
         public async Task<RestaurantDto> GetRestaurantById(int Id)
         {
             var res = await _restaurantRepository.GetRestaurantById(Id);
-            RestaurantDto objres = new RestaurantDto();
-            objres.Id = res.Id;
-            objres.RestaurantName = res.RestaurantName;
-            objres.RestaurantLocation = res.RestaurantLocation;
-            objres.CreationDate = res.CreationDate;
-            return objres;
+            return _mapper.Map<RestaurantDto>(res);
 
         }
 
         public async Task<bool> UpdateRestaurant(RestaurantDto Objres)
         {
             Restaurant res = new Restaurant();
-            res.Id = Objres.Id;
-            res.RestaurantLocation = Objres.RestaurantLocation;
-            res.RestaurantName = Objres.RestaurantName;
-            res.CreationDate = Objres.CreationDate;
+            _mapper.Map(Objres, res);
             await _restaurantRepository.UpdateRestaurant(res);
             return true;
 

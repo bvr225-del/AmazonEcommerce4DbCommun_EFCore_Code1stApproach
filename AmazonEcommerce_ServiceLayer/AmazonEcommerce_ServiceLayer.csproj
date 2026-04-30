@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AmazonEcommerce_BusinessEntities\AmazonEcommerce_BusinessEntities.csproj" />
     <ProjectReference Include="..\AmazonEcommerce_RepositoryLayer\AmazonEcommerce_RepositoryLayer.csproj" />
   </ItemGroup>
