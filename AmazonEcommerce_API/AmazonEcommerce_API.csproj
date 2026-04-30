@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AmazonEcommerce_BusinessEntities\AmazonEcommerce_BusinessEntities.csproj" />
+    <ProjectReference Include="..\AmazonEcommerce_DbConnectivity\AmazonEcommerce_DbConnectivity.csproj" />
+    <ProjectReference Include="..\AmazonEcommerce_RepositoryLayer\AmazonEcommerce_RepositoryLayer.csproj" />
+    <ProjectReference Include="..\AmazonEcommerce_ServiceLayer\AmazonEcommerce_ServiceLayer.csproj" />
   </ItemGroup>
 
 </Project>
